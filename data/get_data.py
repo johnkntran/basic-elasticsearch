@@ -2,7 +2,7 @@ import string
 import urllib
 import json
 
-GOOD_CHARS = string.ascii_letters + string.punctuation + ' '
+GOOD_CHARS = string.ascii_letters + string.digits + string.punctuation + ' '
 
 def get_bad_spot(text):
     for i, char in enumerate(text):
