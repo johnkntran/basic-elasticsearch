@@ -1,5 +1,5 @@
 # basic-elasticsearch
-A basic demonstration of using ElasticSearch to render search results.
+A basic demonstration of using Elasticsearch to render search results.
 
 ## Installation
 
@@ -9,8 +9,28 @@ A basic demonstration of using ElasticSearch to render search results.
 3. Add Oracle's PPA `sudo add-apt-repository ppa:webupd8team/java` and then update the package manager `sudo apt-get update`.
 4. Install Oracle JDK 8 by executing `sudo apt-get install oracle-java8-installer`. You will need to accept the license agreement in the Terminal.
 5. Ensure that the installed Oracle JDK 8 is the default installation (if there are multiple Java versions on the system) with `sudo update-alternatives --config java`.
-6. Many programs use the JAVA_HOME environment variable to figure out where Java is installed. Open the /etc/environment file (in Vim or otherwise) and add a line at the end that says `JAVA_HOME="/usr/lib/jvm/java-8-oracle"`.
+6. Many programs use the JAVA_HOME environment variable to figure out where Java is installed. Open the */etc/environment* file (in Vim or otherwise) and add a line at the end that says `JAVA_HOME="/usr/lib/jvm/java-8-oracle"`.
 7. Refresh the terminal by executing `source /etc/environment`. Then ensure the JAVA_HOME variable is loaded by typing `echo $JAVA_HOME`. Check the Java is properly installed by typing `java -version`.
-
 - Source: https://www.digitalocean.com/community/tutorials/how-to-install-java-with-apt-get-on-ubuntu-16-04
+
+### Install Elasticsearch 6.x
+1. Obtain an Elasticsearch Signing Key by executing `wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -`.
+2. Install the apt-transport-https library with `sudo apt-get install apt-transport-https`.
+3. Save the repository definition with `echo "deb https://artifacts.elastic.co/packages/6.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-6.x.list`.
+4. Install the Elasticsearch Debian package with `sudo apt-get update && sudo apt-get install elasticsearch`.
+5. Your Elasticsearch cluster should be up and running. View its status by typing `sudo systemctl status elasticsearch`. And test an HTTP request by issuing `curl -X GET 'localhost:9200'` and `curl -X GET 'localhost:9200/_cat/health?v'`.
+
+- Source: https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html#install-deb
+- Source: https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-elasticsearch-on-ubuntu-16-04
+
+### Creat Index and Batch Load Data
+1. Create an index called *quotes* with `curl -XPUT 'localhost:9200/quotes?pretty&pretty'`, then `curl -XGET 'localhost:9200/_cat/indices?v&pretty'`.
+2. Bulk import all the quotes data by issueing `curl -s -H "Content-Type: application/x-ndjson" -XPOST localhost:9200/_bulk --data-binary "@test.json"; echo`.
+3. Test by issueing `curl -XGET 'localhost:9200/quotes/_doc/1?pretty&pretty'
+` and `curl -XGET 'localhost:9200/quotes/_search' -H "Content-Type: application/json" -d '{"query": {"match_all": {}}}'`.
+
+- Source: https://www.elastic.co/guide/en/elasticsearch/reference/current/_create_an_index.html
+- Source: https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html
+- Source: http://queirozf.com/entries/elasticsearch-bulk-inserting-examples
+
 

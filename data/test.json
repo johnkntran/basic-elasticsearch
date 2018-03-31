@@ -1,0 +1,4 @@
+{ "index":{ "_index": "quotes", "_type": "docs" } }
+{ "author":"John Tran","quote":"Be the best!" }
+{ "index":{ "_index": "quotes", "_type": "docs" } }
+{ "author":"Jim Tran","quote":"Be the worst!" }
