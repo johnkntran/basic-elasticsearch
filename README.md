@@ -23,14 +23,15 @@ A basic demonstration of using Elasticsearch to render search results.
 - Source: https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html#install-deb
 - Source: https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-elasticsearch-on-ubuntu-16-04
 
-### Creat Index and Batch Load Data
-1. Create an index called *quotes* with `curl -XPUT 'localhost:9200/quotes?pretty&pretty'`, then `curl -XGET 'localhost:9200/_cat/indices?v&pretty'`.
-2. Bulk import all the quotes data by issueing `curl -s -H "Content-Type: application/x-ndjson" -XPOST localhost:9200/_bulk --data-binary "@test.json"; echo`.
-3. Test by issueing `curl -XGET 'localhost:9200/quotes/_doc/1?pretty&pretty'
-` and `curl -XGET 'localhost:9200/quotes/_search' -H "Content-Type: application/json" -d '{"query": {"match_all": {}}}'`.
+### Create an Index and Batch Load Data
+1. Create an index called *quotes* with `curl -XPUT 'localhost:9200/quotes?pretty&pretty'`, then `curl -XGET 'localhost:9200/_cat/indices?v&pretty'` (the yellow status is ok).
+2. Bulk import all the quotes data by first moving into the data directory `cd ./basic-elasticsearch/data`, then issueing `curl -s -H "Content-Type: application/x-ndjson" -XPOST localhost:9200/_bulk --data-binary "@bulk.json"`.
+3. Test by issueing `curl -XGET 'localhost:9200/quotes/_search' -H "Content-Type: application/json" -d '{"query": {"match_all": {}}}'` (which returns a summary of all 1,842 results, plus the first 10 records) and `curl -XGET 'localhost:9200/quotes/_search?q=quote:moon'` (which should return 4 results).
+4. If for some reason you need to delete the index and start over, executing `curl -XDELETE 'localhost:9200/quotes?pretty&pretty'` will delete the index.
 
 - Source: https://www.elastic.co/guide/en/elasticsearch/reference/current/_create_an_index.html
 - Source: https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html
 - Source: http://queirozf.com/entries/elasticsearch-bulk-inserting-examples
 
-
+### Configure Elasticseach to Allow Traffic
+1. In progress...
