@@ -13,7 +13,25 @@ def application(environ, start_response):
         if not params: # GET request
             r = requests.get('http://127.0.0.1:9200/quotes/_search', params={})
         else: # POST request
-            r = requests.get('http://127.0.0.1:9200/quotes/_search?q=quote:{q}'.format(q=params['q']))
+            search_terms = params['q']
+            # Perform Elasticsearch query
+            if ' ' in search_terms:
+                elastic_query = {
+                    "query": {
+                        "match": {
+                            "quote": search_terms
+                        }
+                    }
+                }
+            else:
+                elastic_query = {
+                    "query": {
+                        "wildcard": {
+                            "quote": search_terms + '*'
+                        }
+                    }
+                }
+            r = requests.post('http://127.0.0.1:9200/quotes/_search', json=elastic_query)
         res = str(r.text)
 
     except Exception as e:
