@@ -1,9 +1,3 @@
-import collections
-import traceback
-import requests
-import config
-import utils
-import webob
 import json
 import sys
 import os
@@ -16,7 +10,10 @@ def application(environ, start_response):
     res = ''
 
     try:
-        r = requests.get('http://127.0.0.1:9200/quotes/_search', params={'q': 'quote:moon'})
+        if not params: # GET request
+            r = requests.get('http://127.0.0.1:9200/quotes/_search', params={})
+        else: # POST request
+            r = requests.get('http://127.0.0.1:9200/quotes/_search?q=quote:{q}'.format(q=params['q']))
         res = str(r.text)
 
     except Exception as e:
