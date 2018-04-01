@@ -1,6 +1,10 @@
 # basic-elasticsearch
 A basic demonstration of using Elasticsearch to render search results.
 
+See the live demo at [35.196.93.111/elastic](http://35.196.93.111/elastic/)!
+
+The REST API can be accessed at this endpoint: [35.196.93.111/api/search_famous_quotes.py](http://35.196.93.111/api/search_famous_quotes.py). For a default (no search) GET requests, just hit the endpoint directly. To make a search, send a POST request to the endpoint with a JSON payload in the form `{"q":"your phrase here, e.g. genius inspiration"}`.
+
 ## Installation
 
 ### Install Oracle Java 8 JDK
@@ -33,5 +37,6 @@ A basic demonstration of using Elasticsearch to render search results.
 - Source: https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html
 - Source: http://queirozf.com/entries/elasticsearch-bulk-inserting-examples
 
-### Configure Elasticseach to Allow Traffic
-1. In progress...
+### Launch the app
+1. Follow the steps similar to [Twitter Tweets](https://github.com/johnkntran/twitter-tweets) to launch this app.
+2. You will only need to move the *data/search_famous_quotes.py* into the server folder, e.g. *wsgi-scripts*.

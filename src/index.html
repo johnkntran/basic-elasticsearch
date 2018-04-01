@@ -24,6 +24,7 @@
               <!-- Repeat this -->
               <div class="container" v-for="quote in quotes">
                 <span class="label label-info">{{ quote.author }}</span>
+                <span class="label label-success">Relevance: {{ quote.score }}</span>
                 <div class="well">{{ quote.quote }}</div>
               </div>
 
