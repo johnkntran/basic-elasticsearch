@@ -24,7 +24,6 @@ const vm = new Vue({
   },
   methods: {
     executeSearch() {
-
       $.post("../api/search_famous_quotes.py", `{"q":"${this.query}"}`)
         .done(data => {
           let hits = data.hits.hits;
@@ -34,16 +33,7 @@ const vm = new Vue({
             return res;
           });
           this.quotes = qts;
-        });
-
-      /*
-      $.getJSON('')
-        .done(data => {
-          let hits = data.hits.hits.slice(0, 10);
-          let qts = hits.map(hit => hit._source);
-          this.quotes = qts;
       });
-      */
     }
   }
 });
