@@ -36,15 +36,15 @@ The REST API can be accessed at this endpoint: [35.196.93.111/api/search_famous_
 ### Create an Index and Batch Load Data
 1. Create an index called *quotes* by executing `curl -XPUT 'localhost:9200/quotes?pretty&pretty'`. Inspect the new index by issueing `curl -XGET 'localhost:9200/_cat/indices?v&pretty'`. The *yellow* status is okay, it just means we haven't allocated a replica of this index to a second node.
 2. Bulk import all the quotes data by moving into the data directory with `cd ./basic-elasticsearch/data`, then issueing `curl -s -H "Content-Type: application/x-ndjson" -XPOST localhost:9200/_bulk --data-binary "@bulk.json"`. This imports all the data from the *bulk.json* file.
-3. Test whether the bulk import was successful by typing `curl -XGET 'localhost:9200/quotes/_search' -H "Content-Type: application/json" -d '{"query": {"match_all": {}}}'`. This should give a summary of all documents in the index. Also, try and `curl -XGET 'localhost:9200/quotes/_search?q=quote:moon'`. This should return four documents that have the word *"moon"* in the *quote* field.
-4. If for some reason you need to delete the index and start over, executing `curl -XDELETE 'localhost:9200/quotes?pretty&pretty'` will delete the index.
+3. Test whether the bulk import was successful by typing `curl -XGET 'localhost:9200/quotes/_search' -H "Content-Type: application/json" -d '{"query": {"match_all": {}}}'`. This should give a summary of all documents in the index. Also, try typing `curl -XGET 'localhost:9200/quotes/_search?q=quote:moon'`. This should return 4 documents with the word *"moon"* in the *quote* field.
+4. If for some reason you need to delete the index and start over, typing `curl -XDELETE 'localhost:9200/quotes?pretty&pretty'` will delete the index.
 
 - Source: https://www.elastic.co/guide/en/elasticsearch/reference/current/_create_an_index.html
 - Source: https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html
 - Source: http://queirozf.com/entries/elasticsearch-bulk-inserting-examples
 
 ### Launch the app
-1. Follow the steps similar to [Twitter Tweets](https://github.com/johnkntran/twitter-tweets) to launch this app. Move the frontend files in the [src](./src) folder into where your static files are served (e.g. */var/www/html/elasticsearch*).
-2. To launch the backend, you will need the additional files in [twitter-tweets/backend](https://github.com/johnkntran/twitter-tweets/tree/master/backend). Copy and paste those files into the directory where your scripts are served (e.g. */var/www/wsgi-scripts*).
-3. Additionally, copy and paste the *data/search_famous_quotes.py* from this repository into the same scripts folder (e.g. *../wsgi-scripts*).
-4. Restart the web server (e.g. `sudo systemctl restart apache2`), and the app should be up-and-running on your own domain or IP.
+1. Follow the steps similar to [Twitter Tweets](https://github.com/johnkntran/twitter-tweets) to launch this app. Copy the frontend files from the [src](./src) folder into where your static files are served (e.g. */var/www/html/elasticsearch*).
+2. To launch the backend, you will need the additional files found in [twitter-tweets/backend](https://github.com/johnkntran/twitter-tweets/tree/master/backend). Copy and paste those files into the directory where your scripts are served (e.g. */var/www/wsgi-scripts*).
+3. Additionally, copy and paste the *data/search_famous_quotes.py* from this repository into the same scripts folder above.
+4. Restart the web server with `sudo systemctl restart apache2` and the app should be up-and-running on your personal domain or IP.
