@@ -48,3 +48,13 @@ The REST API can be accessed at this endpoint: [35.196.93.111/api/search_famous_
 2. To launch the backend, you will need the additional files found in [twitter-tweets/backend](https://github.com/johnkntran/twitter-tweets/tree/master/backend). Copy and paste those files into the directory where your scripts are served (e.g. */var/www/wsgi-scripts*).
 3. Additionally, copy and paste the *data/search_famous_quotes.py* from this repository into the same scripts folder above.
 4. Restart the web server with `sudo systemctl restart apache2` and the app should be up-and-running on your personal domain or IP.
+
+## Extra: Installing Elasticsearch on Mac OS
+1. Elasticsearch requires the latest version of Java 8. To test whether Java 8 is installed on the machine, run `java -version`. If not, run `brew cask install caskroom/versions/java8` to install Java 8 via Homebrew Cask.
+2. Check that the JAVA_HOME environment variable is set to the _java_ root directory by running `echo $JAVA_HOME`. If it is blank, open up your _.bash_profile_ in Vim by typing `sudo vim ~/.bash_profile` and adding the line `export JAVA_HOME="$(/usr/libexec/java_home -v 1.8)"` to the bottom. Save and quit. Then reload the shell by typing `source ~/.bash_profile`. Now typing `echo $JAVA_HOME` should yield something like _/Library/Java/JavaVirtualMachines/jdk1.8.0_162.jdk/Contents/Home_.
+3. Install Elasticsearch on a Mac using Homebrew. Issue `brew update` in the Terminal. Then `brew install elasticsearch`.
+4. See the status of your running services using `brew services list`. If Elasticsearch is stopped, you can start it by simply typing `elasticsearch` to run Elasticsearch in the foreground or `brew services start elasticsearch` to run Elasticsearch in daemon mode (in the background).
+
+- Source: https://www.elastic.co/guide/en/elasticsearch/reference/current/_installation.html
+- Source: https://chartio.com/resources/tutorials/how-to-install-elasticsearch-on-mac-os-x/
+- Source: https://stackoverflow.com/questions/6588390/where-is-java-home-on-macos-sierra-10-12-el-capitan-10-11-yosemite-10-10
